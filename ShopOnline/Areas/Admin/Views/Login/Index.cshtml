@@ -1,8 +1,4 @@
-﻿
-@{
-    Layout = null;
-}
-
+﻿@model ShopOnline.Areas.Admin.Models.LoginModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +14,6 @@
     <link href="/Assets/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="/Assets/admin/dist/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Morris Charts CSS -->
-    <link href="/Assets/admin/vendor/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="/Assets/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,35 +24,45 @@
     <![endif]-->
 </head>
 <body>
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            @RenderPage("/Areas/Admin/Views/Shared/_CommonBarMenu.cshtml")
-        </nav>
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">@RenderSection("header",required:true)</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+                        {
+                            @Html.ValidationSummary(false,"",new {@style="color:red"})
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @autofocus = "autofocus" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control"})
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model=>model.RememberMe)Remember Me
+                                    </label>
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <button type="submit" href="index.html" class="btn btn-lg btn-success btn-block">Login</button>
+                            </fieldset>
+                        }
+                    </div>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            @RenderBody()
         </div>
-        <!-- /#page-wrapper -->
     </div>
-    <!-- /#wrapper -->
     <!-- jQuery -->
     <script src="/Assets/admin/vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/Assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/Assets/admin/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="/Assets/admin/vendor/raphael/raphael.min.js"></script>
-    <script src="/Assets/admin/vendor/morrisjs/morris.min.js"></script>
-    <script src="/Assets/admin/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="/Assets/admin/dist/js/sb-admin-2.js"></script>
 </body>
 </html>
-
