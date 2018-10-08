@@ -1,5 +1,6 @@
 ﻿using Model.EF;
 using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,16 +22,69 @@ namespace Model.Dao
             return entity.ID;
         }
 
-        public IEnumerable<User> GetAllUsers(int page, int pageSize)
+        //PAGE LISTING
+        public IEnumerable<User> GetAllUsers(string searchString, int page, int pageSize)
         {
-            return db.Users.OrderByDescending(x => x.CreateDate).ToPagedList(page, pageSize);
+            IQueryable<User> model = db.Users;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Username.Contains(searchString) || x.Name.Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreateDate).ToPagedList(page, pageSize);
         }
 
-        public User GetById(string userName)
+        //GET USER BY ID
+        public User GetUserById(int id)
+        {
+            return db.Users.Find(id);
+        }
+
+        // GET USER BY Username
+        public User GetUserByUsername(string userName)
         {
             return db.Users.SingleOrDefault(x => x.Username == userName);
         }
 
+        //UPDATE USER DETAILS
+        public bool Update(User entity)
+        {
+            try
+            {
+                var user = db.Users.Find(entity.ID);
+                user.Name = entity.Name;
+                user.Password = entity.Password;
+                user.Phone = entity.Phone;
+                user.Address = entity.Address;
+                user.Email = entity.Email;
+                user.ModifiedBy = entity.ModifiedBy;
+                user.ModifiedDate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Write Log here
+                return false;
+            }
+        }
+
+        //  REMOVE USER ACCOUNT
+        public bool Delete(int id)
+        {
+            try
+            {
+                var user = db.Users.Find(id);
+                db.Users.Remove(user);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        //CHECK ACCOUNT VALIDATE
         public int Login(string userName, string passWord)
         {
             var result = db.Users.SingleOrDefault(x => x.Username == userName);
