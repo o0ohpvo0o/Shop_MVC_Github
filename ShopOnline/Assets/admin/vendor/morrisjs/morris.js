@@ -15,7 +15,8 @@ Licensed under the BSD-2-Clause License.
 
   Morris = window.Morris = {};
 
-  $ = jQuery;
+    $ = jQuery;
+
 
   Morris.EventEmitter = (function() {
     function EventEmitter() {}
