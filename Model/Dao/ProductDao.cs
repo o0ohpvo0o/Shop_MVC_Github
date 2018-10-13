@@ -22,7 +22,18 @@ namespace Model.Dao
 
         public List<Product> GetFeatureProduct(int top)
         {
-            return db.Products.OrderByDescending(x => x.CreateDate).Where(x => x.TopHot != null && x.TopHot >DateTime.Now).Take(top).ToList();
+            return db.Products.OrderByDescending(x => x.CreateDate).Where(x => x.TopHot != null && x.TopHot > DateTime.Now).Take(top).ToList();
+        }
+
+        public Product GetProductById(long id)
+        {
+            return db.Products.Find(id);
+        }
+
+        public List<Product> GetRelatedProducts(long productId)
+        {
+            var product = db.Products.Find(productId);
+            return db.Products.Where(x => x.ID != productId && x.CategoryID == product.CategoryID.Value).ToList();
         }
     }
 }

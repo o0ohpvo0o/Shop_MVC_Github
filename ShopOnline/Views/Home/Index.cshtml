@@ -10,7 +10,12 @@
 @section Slide{
     <div class="header_slide">
         <div class="header_bottom_left">
-            @{ Html.RenderAction("ProductCategory", "Product");}
+            <div class="categories">
+                <ul>
+                    <h3>Categories</h3>
+                    @{ Html.RenderAction("ProductCategory", "Product");}
+                </ul>
+            </div>
         </div>
         <div class="header_bottom_right">
             <div class="slider">
@@ -55,7 +60,7 @@
     <div class="section group">
         @foreach (var item in listNewproduct)
         {
-            var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+            var url = "/details/" + item.MetaTitle + "-" + item.ID;
             <div class="grid_1_of_4 images_1_of_4">
                 <a href="@url"><img src="@item.Image" alt="@item.Name" /></a>
                 <h2>@item.Name</h2>
@@ -84,7 +89,7 @@
     <div class="section group">
         @foreach (var item in listFeatureroduct)
         {
-            var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+            var url = "/details/" + item.MetaTitle + "-" + item.ID;
             <div class="grid_1_of_4 images_1_of_4">
                 <a href="@url"><img src="@item.Image" alt="@item.Name" /></a>
                 <h2>@item.Name</h2>

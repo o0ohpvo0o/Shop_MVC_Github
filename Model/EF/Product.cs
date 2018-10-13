@@ -20,7 +20,7 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaTitle { get; set; }
 
-        [StringLength(50)]
+        [StringLength(500)]
         public string Description { get; set; }
 
         [StringLength(250)]

@@ -14,6 +14,27 @@ namespace ShopOnline
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Product Category",
+                url: "products/{metatitle}-{id}",
+                defaults: new { controller = "Product", action = "CategoryField", id = UrlParameter.Optional },
+                namespaces: new[] { "ShopOnline.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "Product Details",
+                url: "details/{metatitle}-{id}",
+                defaults: new { controller = "Product", action = "ProductField", id = UrlParameter.Optional },
+                namespaces: new[] { "ShopOnline.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "About",
+                url: "about",
+                defaults: new { controller = "About", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "ShopOnline.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
