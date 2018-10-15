@@ -69,7 +69,7 @@
                         <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("n0") : "Contact") </span></p>
                     </div>
                     <div class="add-cart">
-                        <h4><a href="@url">Add to Cart</a></h4>
+                        <h4><a href="/add-to-cart?productId=@item.ID&quantity=1">Add to Cart</a></h4>
                     </div>
                     <div class="clear"></div>
                 </div>
@@ -98,7 +98,7 @@
                         <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("n0") : "Contact") </span></p>
                     </div>
                     <div class="add-cart">
-                        <h4><a href="@url">Add to Cart</a></h4>
+                        <h4><a href="/add-to-cart?productId=@item.ID&quantity=1">Add to Cart</a></h4>
                     </div>
                     <div class="clear"></div>
                 </div>

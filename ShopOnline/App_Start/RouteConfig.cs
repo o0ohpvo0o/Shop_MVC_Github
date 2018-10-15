@@ -35,6 +35,13 @@ namespace ShopOnline
             );
 
             routes.MapRoute(
+                name: "Add To Cart",
+                url: "add-to-cart",
+                defaults: new { controller = "Cart", action = "AddItem", id = UrlParameter.Optional },
+                namespaces: new[] { "ShopOnline.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
