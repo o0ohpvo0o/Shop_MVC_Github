@@ -35,5 +35,17 @@ namespace Model.Dao
             var product = db.Products.Find(productId);
             return db.Products.Where(x => x.ID != productId && x.CategoryID == product.CategoryID.Value).ToList();
         }
+
+        /// <summary>
+        /// Get List Products By It's CategoryID
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
+        public List<Product> GetAllProductByCategoryId(long categoryId, ref int totalRecord, int pageIndex = 1, int pageSize = 2)
+        {
+            totalRecord = db.Products.Where(x => x.CategoryID == categoryId).Count();
+            var model = db.Products.Where(x => x.CategoryID == categoryId).OrderByDescending(x=>x.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            return model;
+        }
     }
 }

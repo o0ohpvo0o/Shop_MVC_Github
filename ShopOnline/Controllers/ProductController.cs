@@ -22,9 +22,25 @@ namespace ShopOnline.Controllers
             return PartialView(model);
         }
 
-        public ActionResult CategoryField(long id)
+        public ActionResult CategoryField(long id, int page = 1, int pageSize = 2)
         {
-            var model = new ProductCategoryDao().GetCategoryById(id);
+            var category = new ProductCategoryDao().GetCategoryById(id);
+            ViewBag.Category = category;
+            int totalRecord = 0;
+            var model = new ProductDao().GetAllProductByCategoryId(id, ref totalRecord, page, pageSize);
+
+            ViewBag.TotalRecord = totalRecord;
+            ViewBag.Page = page;
+            ViewBag.MaxPage = 5;
+            var totalPage = (int)Math.Ceiling((double)(totalRecord / pageSize));
+            ViewBag.TotalPage = totalPage;
+
+            ViewBag.First = 1;
+            ViewBag.Last = totalPage;
+
+            ViewBag.NextPage = page + 1;
+            ViewBag.PreviousPage = page - 1;
+
             return View(model);
         }
 
