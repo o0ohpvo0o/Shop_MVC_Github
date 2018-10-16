@@ -51,24 +51,24 @@
                 <ul class="pagination">
                     @if (currentPage > ViewBag.First)
                     {
-                        <li class="page-item"><a href="@url?page=@ViewBag.First" title="First page" class="page-link"><i class="fa fa-fast-backward" ></i></a></li>
-                        <li class="page-item"><a href="@url?page=@ViewBag.PreviousPage" title="Previous page" class="page-link"><i class="fa fa-caret-left" ></i></a></li>
+                        <li class="page-item"><a href="@url?page=@ViewBag.First" title="First page" class="page-link"><i class="fa fa-fast-backward" style="color:grey"></i></a></li>
+                        <li class="page-item"><a href="@url?page=@ViewBag.PreviousPage" title="Previous page" class="page-link"><i class="fa fa-caret-left" style="color:grey"></i></a></li>
                     }
                     @for (int i = startPageIndex; i <= enPageIndex; i++)
                     {
                         if (currentPage == i)
                         {
-                            <li class="page-item"><a href="@url?page=@i" class="active page-link" title="Page @i">@i</a></li>
+                            <li class="page-item"><a href="@url?page=@i" class="active page-link" title="Page @i" style="color:grey">@i</a></li>
                         }
                         else
                         {
-                            <li class="page-item"><a href="@url?page=@i" title="Page @i" class="pos page-link">@i</a></li>
+                            <li class="page-item"><a href="@url?page=@i" title="Page @i" class="pos page-link" style="color:grey">@i</a></li>
                         }
                     }
                     @if (currentPage < totalPage)
                     {
-                        <li class="page-item"><a href="@url?page=@ViewBag.NextPage" class="page-link" title="Next page"><i class="fa fa-caret-right" ></i></a></li>
-                        <li class="page-item"><a href="@url?page=@ViewBag.Last" class="page-link" title="Last page"><i class="fa fa-fast-forward" ></i></a></li>
+                        <li class="page-item"><a href="@url?page=@ViewBag.NextPage" class="page-link" title="Next page"><i class="fa fa-caret-right" style="color:grey"></i></a></li>
+                        <li class="page-item"><a href="@url?page=@ViewBag.Last" class="page-link" title="Last page"><i class="fa fa-fast-forward" style="color:grey"></i></a></li>
                     }
                 </ul>
             </nav>

@@ -1,4 +1,6 @@
 ﻿using Model.Dao;
+using ShopOnline.Common;
+using ShopOnline.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,18 @@ namespace ShopOnline.Controllers
         {
             var model = new MenuDao().ListByGroupId(2);
             return PartialView(model);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult HeaderCart()
+        {
+            var cart = Session[CommonConstant.CartSession];
+            var list = new List<CartItem>();
+            if (cart != null)
+            {
+                list = (List<CartItem>)cart;
+            }
+            return PartialView(list);
         }
 
         [ChildActionOnly]

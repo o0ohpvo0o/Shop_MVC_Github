@@ -42,6 +42,27 @@ namespace ShopOnline
             );
 
             routes.MapRoute(
+               name: "Update Cart",
+               url: "update-cart",
+               defaults: new { controller = "Cart", action = "Index", id = UrlParameter.Optional },
+               namespaces: new[] { "ShopOnline.Controllers" }
+           );
+
+            routes.MapRoute(
+              name: "Payment",
+              url: "payment-details",
+              defaults: new { controller = "Cart", action = "Payment", id = UrlParameter.Optional },
+              namespaces: new[] { "ShopOnline.Controllers" }
+          );
+
+            routes.MapRoute(
+              name: "Payment Success",
+              url: "payment-success",
+              defaults: new { controller = "Cart", action = "Success", id = UrlParameter.Optional },
+              namespaces: new[] { "ShopOnline.Controllers" }
+          );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },

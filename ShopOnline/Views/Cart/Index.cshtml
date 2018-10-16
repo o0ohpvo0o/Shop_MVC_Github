@@ -4,6 +4,10 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section jsFooter{
+    <script src="/Assets/client/js/controller/cartController.js"></script>
+}
 <div class="content">
     <div class="content_top">
         <div class="clear"></div>
@@ -20,6 +24,7 @@
                         <td>Product Quantity</td>
                         <td>Product Price</td>
                         <td>Bill</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,13 +34,22 @@
                             <td>@item.Product.ID</td>
                             <td>@item.Product.Name</td>
                             <td><img src="@item.Product.Image" width="100" /></td>
-                            <td><input type="text" class="quantity" value="@item.Quantity" /></td>
+                            <td><input type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
                             <td>@item.Product.Price.GetValueOrDefault(0).ToString("n0")</td>
                             <td>@((item.Quantity * item.Product.Price.GetValueOrDefault(0)).ToString("n0"))</td>
+                            <td>
+                                <a href="#" class="btnRemoveItem" data-id="@item.Product.ID">
+                                    <i class="fas fa-trash-alt" style="color:grey"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
+            <button class="btn btn-info" id="btnContinue">Continue Shopping</button>
+            <button class="btn btn-info" id="btnUpdate">Update Cart Items</button>
+            <button class="btn btn-info" id="btnDelete">Delete Cart Items</button>
+            <button class="btn btn-info" id="btnPayment">Confirm and Pay</button>
         </div>
     }
     else

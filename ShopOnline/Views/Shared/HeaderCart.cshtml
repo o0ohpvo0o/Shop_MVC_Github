@@ -1,0 +1,35 @@
+﻿@model List<ShopOnline.Models.CartItem>
+
+@{
+    var bill = string.Empty;
+    if (Model.Count > 0)
+    {
+        var pay = Model.Sum(x => x.Quantity * x.Product.Price);
+        bill = pay.Value.ToString("n0") + " $";
+    }
+    else
+    {
+        bill = "0.00 $";
+    }
+}
+<div class="cart">
+    <p>
+        Welcome to our Online Store! <span>Cart:</span><div id="dd" class="wrapper-dropdown-2">
+            @Model.Count item(s) - @bill
+            <ul class="dropdown">
+                @{
+                    if (Model.Count > 0)
+                    {
+                        <li>you have no items in your Shopping cart</li>
+
+                    }
+                    else
+                    {
+                        <li>you have @Model.Count items in your Shopping cart</li>
+
+                    }
+                }
+            </ul>
+        </div>
+    </p>
+</div>
