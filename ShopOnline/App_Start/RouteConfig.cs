@@ -13,6 +13,9 @@ namespace ShopOnline
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.IgnoreRoute("{*botdetect}",
+            new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
+
             routes.MapRoute(
                 name: "Product Category",
                 url: "products/{metatitle}-{id}",
@@ -61,6 +64,20 @@ namespace ShopOnline
               defaults: new { controller = "Cart", action = "Success", id = UrlParameter.Optional },
               namespaces: new[] { "ShopOnline.Controllers" }
           );
+
+            routes.MapRoute(
+              name: "Contact",
+              url: "contact",
+              defaults: new { controller = "Contact", action = "Index", id = UrlParameter.Optional },
+              namespaces: new[] { "ShopOnline.Controllers" }
+          );
+
+            routes.MapRoute(
+             name: "Register",
+             url: "register",
+             defaults: new { controller = "User", action = "Register", id = UrlParameter.Optional },
+             namespaces: new[] { "ShopOnline.Controllers" }
+         );
 
             routes.MapRoute(
                 name: "Default",

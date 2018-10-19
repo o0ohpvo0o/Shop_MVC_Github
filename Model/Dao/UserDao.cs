@@ -116,5 +116,17 @@ namespace Model.Dao
             db.SaveChanges();
             return userFind.Status;
         }
+
+        //CHECK USERNAME EXIST
+        public bool CheckUserExsit(string username)
+        {
+            return db.Users.Count(x => x.Username == username) > 0;
+        }
+
+        //CHECK EMAIL EXIST
+        public bool CheckEmailExsit(string email)
+        {
+            return db.Users.Count(x => x.Email == email) > 0;
+        }
     }
 }
