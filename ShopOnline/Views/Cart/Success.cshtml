@@ -2,22 +2,13 @@
 @{
     ViewBag.Title = "Success";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var validateOrder = ViewBag.ValidateOrder;
 }
 
 <br />
 <div></div>
-@{
-    if (validateOrder != null && validateOrder == true)
-    {
-        <div class="alert  alert-success col-md-6">
-            Your orders have been placed !
-        </div>
-    }
-    else
-    {
-    }
-}
+<div class="alert  alert-success col-md-6">
+    Your orders have been placed !
+</div>
 
 
 

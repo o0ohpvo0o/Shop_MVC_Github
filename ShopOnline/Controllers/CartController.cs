@@ -1,9 +1,11 @@
-﻿using Model.Dao;
+﻿using Common;
+using Model.Dao;
 using Model.EF;
 using ShopOnline.Common;
 using ShopOnline.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -135,6 +137,7 @@ namespace ShopOnline.Controllers
                 var id = new OrderDao().Insert(order);
                 var cart = (List<CartItem>)Session[CommonConstant.CartSession];
                 var detailDao = new OrderDetailDao();
+                decimal total = 0;
                 foreach (var item in cart)
                 {
                     var orderDetail = new OrderDetail();
@@ -142,19 +145,21 @@ namespace ShopOnline.Controllers
                     orderDetail.Quantity = item.Quantity;
                     orderDetail.Price = item.Product.Price;
                     orderDetail.OrderID = id;
-
+                    total += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
                     var orderConfirm = detailDao.Insert(orderDetail);
-                    if (orderConfirm)
-                    {
-                        ViewBag.ValidateOrder = true;
-                    }
-                    else
-                    {
-                        ViewBag.ValidateOrder = false;
-                    }
                 }
+                string content = System.IO.File.ReadAllText(Server.MapPath("~/Assets/client/templates/neworder.html"));
+                content = content.Replace("{{CustomerName}}", name);
+                content = content.Replace("{{phone}}", phone);
+                content = content.Replace("{{email}}", email);
+                content = content.Replace("{{address}}", address);
+                content = content.Replace("{{bill}}", total.ToString("n0"));
+
+                var FromEmail = ConfigurationManager.AppSettings["FromEmailAddress"].ToString();
+                new MailHelper().SendMail(email, "Your Order From Online Shopping", content);
+                new MailHelper().SendMail(FromEmail, "Your Order From Online Shopping", content);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // write log
                 return Redirect("/payment-failed");

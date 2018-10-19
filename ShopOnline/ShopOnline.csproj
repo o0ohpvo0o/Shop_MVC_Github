@@ -2822,6 +2822,7 @@
     <Content Include="Assets\client\svgs\solid\x-ray.svg" />
     <Content Include="Assets\client\svgs\solid\yen-sign.svg" />
     <Content Include="Assets\client\svgs\solid\yin-yang.svg" />
+    <Content Include="Assets\client\templates\neworder.html" />
     <Content Include="Assets\client\webfonts\fa-brands-400.svg" />
     <Content Include="Assets\client\webfonts\fa-regular-400.svg" />
     <Content Include="Assets\client\webfonts\fa-solid-900.svg" />
@@ -3044,6 +3045,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{5D8B04A0-CA70-4349-8FB9-A07A23E1F7A9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{1ed8e626-dd1a-48ed-8d2d-4c19e4b83cf7}</Project>
       <Name>Model</Name>
