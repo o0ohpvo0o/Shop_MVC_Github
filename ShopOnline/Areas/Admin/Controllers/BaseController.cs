@@ -1,5 +1,4 @@
-﻿using ShopOnline.Areas.Admin.Common;
-using ShopOnline.Common;
+﻿using ShopOnline.Common;
 using System.Web.Mvc;
 using System.Web.Routing;
 

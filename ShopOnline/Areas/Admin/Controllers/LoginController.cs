@@ -1,8 +1,7 @@
 ﻿using Model.Dao;
 using Model.EF;
-using ShopOnline.Areas.Admin.Common;
-using ShopOnline.Areas.Admin.Models;
 using ShopOnline.Common;
+using ShopOnline.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
