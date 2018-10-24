@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace ShopOnline.Controllers
 {
@@ -22,6 +23,7 @@ namespace ShopOnline.Controllers
             return PartialView(model);
         }
 
+        [OutputCache(CacheProfile = "Cache12hours")]
         public ActionResult CategoryField(long id, int page = 1, int pageSize = 2)
         {
             var category = new ProductCategoryDao().GetCategoryById(id);
@@ -44,6 +46,7 @@ namespace ShopOnline.Controllers
             return View(model);
         }
 
+        [OutputCache(CacheProfile = "Cache2hour")]
         public ActionResult ProductField(long id)
         {
             var model = new ProductDao().GetProductById(id);

@@ -542,7 +542,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\District.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\Precinct.cs" />
+    <Compile Include="Models\Province.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1715,6 +1718,7 @@
     <Content Include="Assets\client\css\global.css" />
     <Content Include="Assets\client\css\slider.css" />
     <Content Include="Assets\client\css\style.css" />
+    <Content Include="Assets\client\data\Provinces_Data.xml" />
     <Content Include="Assets\client\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\client\images\about_img.jpg" />
     <Content Include="Assets\client\images\arrow-next.png" />
@@ -1769,6 +1773,7 @@
     <Content Include="Assets\client\js\bootstrap.min.js" />
     <Content Include="Assets\client\js\controller\cartController.js" />
     <Content Include="Assets\client\js\controller\contactController.js" />
+    <Content Include="Assets\client\js\controller\UserController.js" />
     <Content Include="Assets\client\js\easing.js" />
     <Content Include="Assets\client\js\easyResponsiveTabs.js" />
     <Content Include="Assets\client\js\fontawesome.js" />

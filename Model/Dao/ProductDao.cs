@@ -60,7 +60,7 @@ namespace Model.Dao
                             Name = a.Name,
                             Price = a.Price
                         };
-            model.OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            model = model.OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             return model.ToList();
         }
     }

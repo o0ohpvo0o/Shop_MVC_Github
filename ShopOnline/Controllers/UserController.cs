@@ -10,6 +10,8 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace ShopOnline.Controllers
 {
@@ -47,6 +49,19 @@ namespace ShopOnline.Controllers
                     newUser.Email = model.Email;
                     newUser.CreateDate = DateTime.Now;
                     newUser.Phone = model.Phone;
+                    if (!string.IsNullOrEmpty(model.Province))
+                    {
+                        newUser.Province = model.Province;
+                        if (!string.IsNullOrEmpty(model.District))
+                        {
+                            newUser.District = model.District;
+                            if (!string.IsNullOrEmpty(model.Precinct))
+                            {
+                                newUser.Precinct = model.Precinct;
+                            }
+                        }
+                    }
+
                     newUser.Address = model.Address;
                     newUser.Status = true;
 
@@ -182,6 +197,73 @@ namespace ShopOnline.Controllers
                 }
             }
             return Redirect("/");
+        }
+
+        public JsonResult LoadProvince()
+        {
+            var xmlDoc = XDocument.Load(Server.MapPath(@"/Assets/client/data/Provinces_Data.xml"));
+            var xElement = xmlDoc.Element("Root").Elements("Item").Where(x => x.Attribute("type").Value == "province");
+            var listProvince = new List<Province>();
+            foreach (var item in xElement)
+            {
+                var province = new Province();
+                province.ID = item.Attribute("id").Value;
+                province.Name = item.Attribute("value").Value;
+                listProvince.Add(province);
+            }
+            return Json(new
+            {
+                data = listProvince,
+                status = true,
+            });
+        }
+
+        public JsonResult LoadDistrict(string provinceID)
+        {
+            var xmlDoc = XDocument.Load(Server.MapPath(@"/Assets/client/data/Provinces_Data.xml"));
+            var xElement = xmlDoc.Element("Root").Elements("Item").Where(x => x.Attribute("type").Value == "province"
+                            && x.Attribute("value").Value == provinceID);
+            var xChildElement = xElement.Elements("Item").Where(x => x.Attribute("type").Value == "district");
+            var listDistrict = new List<District>();
+            foreach (var item in xChildElement)
+            {
+                var district = new District();
+                district.ID = item.Attribute("id").Value;
+                district.Name = item.Attribute("value").Value;
+                district.ProvinceID = provinceID;
+                listDistrict.Add(district);
+            }
+            return Json(new
+            {
+                data = listDistrict,
+                status = true,
+            });
+        }
+
+        public JsonResult LoadPrecinct(string provinceID, string districtID)
+        {
+            var xmlDoc = XElement.Load(Server.MapPath(@"/Assets/client/data/Provinces_Data.xml"));
+            var xElement = xmlDoc.Elements("Item").Where(x => x.Attribute("type").Value == "province"
+                            && x.Attribute("value").Value == provinceID);
+            var xDistricts = xElement.Elements("Item").Where(x => x.Attribute("type").Value == "district" && x.Attribute("value").Value == districtID);
+            var xPrecinct = xDistricts.Elements("Item").Where(x => x.Attribute("type").Value == "precinct");
+
+            var listPrecinct = new List<Precinct>();
+            foreach (var item in xPrecinct)
+            {
+                var precinct = new Precinct();
+                precinct.ProvinceID = provinceID;
+                precinct.DistrictID = districtID;
+                precinct.ID = item.Attribute("id").Value;
+                precinct.Name = item.Attribute("value").Value;
+                listPrecinct.Add(precinct);
+            }
+
+            return Json(new
+            {
+                data = listPrecinct,
+                status = true,
+            });
         }
     }
 }

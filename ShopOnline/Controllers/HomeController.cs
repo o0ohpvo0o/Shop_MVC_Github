@@ -18,10 +18,12 @@ namespace ShopOnline.Controllers
             var product = new ProductDao();
             ViewBag.NewProduct = product.GetNewProduct(4);
             ViewBag.FeatureProduct = product.GetFeatureProduct(4);
+            //var userSession = Session[CommonConstant.USER_SESSION];
             return View();
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public ActionResult MainMenu()
         {
             var model = new MenuDao().ListByGroupId(1);
@@ -29,6 +31,7 @@ namespace ShopOnline.Controllers
         }
 
         [ChildActionOnly]
+        //[OutputCache(Duration = 3600)]
         public ActionResult TopMenu()
         {
             var model = new MenuDao().ListByGroupId(2);
@@ -36,6 +39,7 @@ namespace ShopOnline.Controllers
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public PartialViewResult HeaderCart()
         {
             var cart = Session[CommonConstant.CartSession];
@@ -48,6 +52,7 @@ namespace ShopOnline.Controllers
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public ActionResult Footer()
         {
             var model = new FooterDao().GetFooter();
