@@ -1,0 +1,93 @@
+﻿@model List<Model.ViewModel.ProductViewModel>
+@{
+    var category = (Model.EF.ProductCategory)ViewBag.Category;
+    ViewBag.Title = "Result Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Result Search of "@ViewBag.Keyword"</h3>
+        </div>
+        <div class="see">
+            <p><a href="#">See all Products</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @{
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    var url = "/details/" + item.Metatitle + "-" + item.ID;
+
+                    <div class="grid_1_of_4 images_1_of_4">
+                        <a href="@url"><img src="@item.Images" alt="" /></a>
+                        <h2>@item.Name</h2>
+                        <span>@item.CateName</span>
+                        <div class="price-details">
+                            <div class="price-number">
+                                <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("n0") : "Contact")</span></p>
+                            </div>
+                            <div class="add-cart">
+                                <h4><a href="preview.html">Add to Cart</a></h4>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                    </div>
+                }
+                <div class="clear"></div>
+                <!--List Page by Number of Products-->
+                if (ViewBag.TotalPage > 1)
+                {
+                    var pageDisplay = Convert.ToInt32(ViewBag.MaxPage);
+                    var totalPage = Convert.ToInt32(ViewBag.TotalPage);
+                    var currentPage = Convert.ToInt32(ViewBag.Page);
+
+                    var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                    var enPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                    var url = "/search?keyword=" + ViewBag.Keyword;
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if (currentPage > ViewBag.First)
+                            {
+                                <li class="page-item"><a href="@url&page=@ViewBag.First" title="First page" class="page-link"><i class="fa fa-fast-backward" style="color:grey"></i></a></li>
+                                <li class="page-item"><a href="@url&page=@ViewBag.PreviousPage" title="Previous page" class="page-link"><i class="fa fa-caret-left" style="color:grey"></i></a></li>
+                            }
+                            @for (int i = startPageIndex; i <= enPageIndex; i++)
+                            {
+                                if (currentPage == i)
+                                {
+                                    <li class="page-item"><a href="@url&page=@i" class="active page-link" title="Page @i" style="color:grey">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a href="@url&page=@i" title="Page @i" class="pos page-link" style="color:grey">@i</a></li>
+                                }
+                            }
+                            @if (currentPage < totalPage)
+                            {
+                                <li class="page-item"><a href="@url&page=@ViewBag.NextPage" class="page-link" title="Next page"><i class="fa fa-caret-right" style="color:grey"></i></a></li>
+                                <li class="page-item"><a href="@url&page=@ViewBag.Last" class="page-link" title="Last page"><i class="fa fa-fast-forward" style="color:grey"></i></a></li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+            else
+            {
+                <br />
+                <form class="section group">
+                    <span class="form-control alert alert-info col-md-6">
+                        No products to display...
+                    </span>
+                </form>
+            }
+        }
+    </div>
+</div>
+

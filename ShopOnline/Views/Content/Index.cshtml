@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Model.EF.Content>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>News</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="image group">
+            <div class="grid images_3_of_1">
+                <img src="@item.Image" alt="" />
+            </div>
+            <div class="grid news_desc">
+                <h3><a href="/news/@item.MetaTitle-@item.ID">@item.Name</a></h3>
+                <h4>Posted on @item.CreateDate by <span><a href="#">@item.CreateBy</a></span></h4>
+                <p>@item.Description</p>
+            </div>
+        </div>
+    }
+
+    @if (ViewBag.TotalPage > 1)
+    {
+        var pageDisplay = Convert.ToInt32(ViewBag.MaxPage);
+        var totalPage = Convert.ToInt32(ViewBag.TotalPage);
+        var currentPage = Convert.ToInt32(ViewBag.Page);
+
+        var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+        var enPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+        var url = "/news";
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (currentPage > ViewBag.First)
+                {
+                    <li class="page-item"><a href="@url?page=@ViewBag.First" title="First page" class="page-link"><i class="fa fa-fast-backward" style="color:grey"></i></a></li>
+                    <li class="page-item"><a href="@url?page=@ViewBag.PreviousPage" title="Previous page" class="page-link"><i class="fa fa-caret-left" style="color:grey"></i></a></li>
+                }
+                @for (int i = startPageIndex; i <= enPageIndex; i++)
+                {
+                    if (currentPage == i)
+                    {
+                        <li class="page-item"><a href="@url?page=@i" class="active page-link" title="Page @i" style="color:grey">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a href="@url?page=@i" title="Page @i" class="pos page-link" style="color:grey">@i</a></li>
+                    }
+                }
+                @if (currentPage < totalPage)
+                {
+                    <li class="page-item"><a href="@url?page=@ViewBag.NextPage" class="page-link" title="Next page"><i class="fa fa-caret-right" style="color:grey"></i></a></li>
+                    <li class="page-item"><a href="@url?page=@ViewBag.Last" class="page-link" title="Last page"><i class="fa fa-fast-forward" style="color:grey"></i></a></li>
+                }
+            </ul>
+        </nav>
+    }
+</div>

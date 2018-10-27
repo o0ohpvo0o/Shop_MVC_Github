@@ -17,6 +17,27 @@ namespace ShopOnline
             new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
 
             routes.MapRoute(
+             name: "News",
+             url: "news",
+             defaults: new { controller = "Content", action = "Index", id = UrlParameter.Optional },
+             namespaces: new[] { "ShopOnline.Controllers" }
+         );
+
+            routes.MapRoute(
+                name: "Content Details",
+                url: "news/{metatitle}-{id}",
+                defaults: new { controller = "Content", action = "Details", id = UrlParameter.Optional },
+                namespaces: new[] { "ShopOnline.Controllers" }
+            );
+
+            routes.MapRoute(
+             name: "Tags",
+             url: "tags/{tagID}",
+             defaults: new { controller = "Content", action = "Tag", id = UrlParameter.Optional },
+             namespaces: new[] { "ShopOnline.Controllers" }
+         );
+
+            routes.MapRoute(
                 name: "Product Category",
                 url: "products/{metatitle}-{id}",
                 defaults: new { controller = "Product", action = "CategoryField", id = UrlParameter.Optional },
@@ -27,6 +48,13 @@ namespace ShopOnline
                 name: "Product Details",
                 url: "details/{metatitle}-{id}",
                 defaults: new { controller = "Product", action = "ProductField", id = UrlParameter.Optional },
+                namespaces: new[] { "ShopOnline.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "Product Search",
+                url: "search",
+                defaults: new { controller = "Product", action = "Search", id = UrlParameter.Optional },
                 namespaces: new[] { "ShopOnline.Controllers" }
             );
 
@@ -85,6 +113,7 @@ namespace ShopOnline
              defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional },
              namespaces: new[] { "ShopOnline.Controllers" }
          );
+
 
             routes.MapRoute(
                 name: "Default",

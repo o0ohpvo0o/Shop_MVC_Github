@@ -56,7 +56,7 @@ namespace Model.EF
         public string MetaDescription { get; set; }
 
         [Display(Name = "Content_Status", ResourceType = typeof(StaticResource.Resources))]
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
 
         [Display(Name = "Content_TopHot", ResourceType = typeof(StaticResource.Resources))]
         public DateTime? TopHot { get; set; }
@@ -65,5 +65,8 @@ namespace Model.EF
         public int? ViewCount { get; set; }
 
         public string Language { get; set; }
+
+        [StringLength(500)]
+        public string Tags { get; set; }
     }
 }

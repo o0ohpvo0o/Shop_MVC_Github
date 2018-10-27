@@ -1,0 +1,80 @@
+﻿@model PagedList.IPagedList<Model.EF.Content>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Manage News";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    News data
+}
+@section jsFooter{
+    <script src="~/Assets/admin/js/controller/UserController.js"></script>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                User Profile
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                @using (Html.BeginForm("Index", "Content", FormMethod.Get))
+                {
+                    <div class="row form-group">
+                        <div class="col-lg-12">
+                            <div class="col-xs-4">
+                                <input type="search" class="form-control" value="@ViewBag.searchString" name="searchString" />
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn btn-success">Search</button>
+                                <a href="/Admin/Content/Create" class="btn btn-primary">Create</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Image</th>
+                                <th>Created date</th>
+                                <th>Created by</th>
+                                <th>Status</th>
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row_@item.ID">
+                                    <td>@item.Name</td>
+                                    <td>@item.Image</td>
+                                    <td>@item.CreateDate</td>
+                                    <td>@item.CreateBy</td>
+                                    <td>@item.Status</td>
+                                    <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Status ? "Active" : "Blocked")</a> </td>
+                                    <td>
+                                        <a href="/Admin/Content/Edit/@item.ID">EDIT | </a>
+                                        @Ajax.ActionLink("DEL", "Delete", new { @id = item.ID }, new AjaxOptions()
+                                        {
+                                            Confirm = "Are you sure to remove user " + '(' + item.Name + ')',
+                                            OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                            HttpMethod = "Delete",
+                                        })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", "User", new { @searchString = ViewBag.searchString, page }))
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+</div>

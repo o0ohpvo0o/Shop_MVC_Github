@@ -529,12 +529,14 @@
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Common\CommonConstant.cs" />
     <Compile Include="Common\Encryptor.cs" />
+    <Compile Include="Common\HasPermissionAttribute.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -1716,6 +1718,8 @@
     <Content Include="Assets\client\css\easy-responsive-tabs.css" />
     <Content Include="Assets\client\css\font-awesome.min.css" />
     <Content Include="Assets\client\css\global.css" />
+    <Content Include="Assets\client\css\jquery-ui.css" />
+    <Content Include="Assets\client\css\jquery.auto-complete.css" />
     <Content Include="Assets\client\css\slider.css" />
     <Content Include="Assets\client\css\style.css" />
     <Content Include="Assets\client\data\Provinces_Data.xml" />
@@ -1771,6 +1775,7 @@
     <Content Include="Assets\client\images\value-rating.png" />
     <Content Include="Assets\client\images\wishlist.png" />
     <Content Include="Assets\client\js\bootstrap.min.js" />
+    <Content Include="Assets\client\js\controller\baseController.js" />
     <Content Include="Assets\client\js\controller\cartController.js" />
     <Content Include="Assets\client\js\controller\contactController.js" />
     <Content Include="Assets\client\js\controller\UserController.js" />
@@ -1780,7 +1785,9 @@
     <Content Include="Assets\client\js\fontawesome.min.js" />
     <Content Include="Assets\client\js\jquery-1.7.2.min.js" />
     <Content Include="Assets\client\js\jquery-3.3.1.min.js" />
+    <Content Include="Assets\client\js\jquery-ui.js" />
     <Content Include="Assets\client\js\jquery.accordion.js" />
+    <Content Include="Assets\client\js\jquery.auto-complete.min.js" />
     <Content Include="Assets\client\js\jquery.easing.js" />
     <Content Include="Assets\client\js\move-top.js" />
     <Content Include="Assets\client\js\popper.min.js" />
@@ -3344,6 +3351,9 @@
     <Content Include="Assets\client\webfonts\fa-solid-900.woff" />
     <Content Include="Assets\client\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Views\Category\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Content\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Content\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Error401.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -3388,6 +3398,10 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Product\Search.cshtml" />
+    <Content Include="Views\Content\Index.cshtml" />
+    <Content Include="Views\Content\Details.cshtml" />
+    <Content Include="Views\Content\Tag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

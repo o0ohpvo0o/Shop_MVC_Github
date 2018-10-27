@@ -1,4 +1,5 @@
-﻿using Model.EF;
+﻿using Common;
+using Model.EF;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -100,7 +101,7 @@ namespace Model.Dao
         }
 
         //CHECK ACCOUNT VALIDATE
-        public int Login(string userName, string passWord)
+        public int Login(string userName, string passWord, bool isLoginAdmin = false)
         {
             var result = db.Users.SingleOrDefault(x => x.Username == userName);
             if (result == null)
@@ -109,18 +110,62 @@ namespace Model.Dao
             }
             else
             {
-                if (result.Status == false)
+                if (isLoginAdmin == true)
                 {
-                    return -1;
+                    if (result.GroupID == LoginHelper.ADMIN_GROUP || result.GroupID == LoginHelper.MOD_GROUP)
+                    {
+                        if (result.Status == false)
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            if (result.Password == passWord)
+                                return 1;
+                            else
+                                return -2;
+                        }
+                    }
+                    else
+                    {
+                        return -3;
+                    }
                 }
                 else
                 {
-                    if (result.Password == passWord)
-                        return 1;
+                    if (result.Status == false)
+                    {
+                        return -1;
+                    }
                     else
-                        return -2;
+                    {
+                        if (result.Password == passWord)
+                            return 1;
+                        else
+                            return -2;
+                    }
                 }
+
             }
+        }
+
+        public List<string> GetListCredentials(string userName)
+        {
+            var currentUser = db.Users.Single(x => x.Username == userName);
+            var data = (from a in db.Credentials
+                        join b in db.UserGroups on a.UserGroupID equals b.ID
+                        join c in db.Roles on a.RoleID equals c.ID
+                        where b.ID == currentUser.GroupID
+                        select new
+                        {
+                            RoleID = a.RoleID,
+                            UserGroupID = a.UserGroupID,
+                        }).ToList().Select(x => new Credential()
+                        {
+                            RoleID = x.RoleID,
+                            UserGroupID = x.UserGroupID
+                        });
+            return data.Select(x => x.RoleID).ToList();
         }
 
         //CHANGE USER STATUS

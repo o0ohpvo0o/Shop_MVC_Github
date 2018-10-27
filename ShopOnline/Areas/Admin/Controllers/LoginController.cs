@@ -23,15 +23,16 @@ namespace ShopOnline.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-                var result = dao.Login(model.Username, Encryptor.MD5Hash(model.Password));
+                var result = dao.Login(model.Username, Encryptor.MD5Hash(model.Password), true);
                 if (result == 1)
                 {
                     var user = dao.GetUserByUsername(model.Username);
                     var userSession = new UserLogin();
-
+                    var listCredentials = dao.GetListCredentials(model.Username);
+                    Session.Add(CommonConstant.SESSION_CREDENTIALS, listCredentials);
                     userSession.Username = user.Username;
                     userSession.UserID = user.ID;
-
+                    userSession.GroupID = user.GroupID;
                     Session.Add(CommonConstant.USER_SESSION, userSession);
                     return RedirectToAction("Index", "Home");
                 }
@@ -39,13 +40,17 @@ namespace ShopOnline.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Username is not existed");
                 }
-                else if( result == -1)
+                else if (result == -1)
                 {
                     ModelState.AddModelError("", "Your Account is blocked");
                 }
-                else if( result == -2)
+                else if (result == -2)
                 {
                     ModelState.AddModelError("", "Password is invalid");
+                }
+                else if (result == -3)
+                {
+                    ModelState.AddModelError("", "You don't have permission to access this area");
                 }
                 else
                 {

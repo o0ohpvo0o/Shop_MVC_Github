@@ -1,4 +1,5 @@
 ﻿using Model.Dao;
+using Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace ShopOnline.Controllers
             return PartialView(model);
         }
 
-        [OutputCache(CacheProfile = "Cache12hours")]
+        //[OutputCache(CacheProfile = "Cache12hours")]
         public ActionResult CategoryField(long id, int page = 1, int pageSize = 2)
         {
             var category = new ProductCategoryDao().GetCategoryById(id);
@@ -46,6 +47,31 @@ namespace ShopOnline.Controllers
             return View(model);
         }
 
+        public ActionResult Search(string keyword, int page = 1, int pageSize = 2)
+        {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                ViewBag.Keyword = keyword;
+                int totalRecord = 0;
+                model = new ProductDao().Search(keyword, ref totalRecord, page, pageSize);
+
+                ViewBag.TotalRecord = totalRecord;
+                ViewBag.Page = page;
+                ViewBag.MaxPage = 5;
+                var totalPage = (int)Math.Ceiling((double)(totalRecord / pageSize));
+                ViewBag.TotalPage = totalPage;
+
+                ViewBag.First = 1;
+                ViewBag.Last = totalPage;
+
+                ViewBag.NextPage = page + 1;
+                ViewBag.PreviousPage = page - 1;
+            }
+
+            return View(model);
+        }
+
         [OutputCache(CacheProfile = "Cache2hour")]
         public ActionResult ProductField(long id)
         {
@@ -53,6 +79,17 @@ namespace ShopOnline.Controllers
             ViewBag.ProductCategory = new ProductCategoryDao().GetCategoryById(model.CategoryID.Value);
             ViewBag.RelatedProducts = new ProductDao().GetRelatedProducts(id);
             return View(model);
+        }
+
+        public JsonResult GetNameProduct(string term)
+        {
+            var productList = new ProductDao().GetProductName(term);
+
+            return Json(new
+            {
+                data = productList,
+                status = true,
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

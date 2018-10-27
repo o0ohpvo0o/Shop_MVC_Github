@@ -12,6 +12,7 @@ namespace ShopOnline.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         // GET: Admin/User
+        [HasPermission(RoleID = "VIEW_USER")]
         public ActionResult Index(string searchString, int? page, int pageSize = 10)
         {
             var currentPage = page ?? 1;
@@ -23,12 +24,14 @@ namespace ShopOnline.Areas.Admin.Controllers
 
         #region Create Function
         [HttpGet]
+        [HasPermission(RoleID = "ADD_USER")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [HasPermission(RoleID = "ADD_USER")]
         public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
@@ -54,6 +57,7 @@ namespace ShopOnline.Areas.Admin.Controllers
 
         #region Update User profile Function
         [HttpGet]
+        [HasPermission(RoleID = "EDIT_USER")]
         public ActionResult Update(int id)
         {
             var user = new UserDao().GetUserById(id);
@@ -61,6 +65,7 @@ namespace ShopOnline.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [HasPermission(RoleID = "EDIT_USER")]
         public ActionResult Update(User user)
         {
             if (ModelState.IsValid)
@@ -86,6 +91,7 @@ namespace ShopOnline.Areas.Admin.Controllers
 
         #region Delete user function
         [HttpDelete]
+        [HasPermission(RoleID = "DELETE_USER")]
         public ActionResult Delete(int id)
         {
             var dao = new UserDao();
@@ -96,6 +102,7 @@ namespace ShopOnline.Areas.Admin.Controllers
         #endregion
 
         [HttpPost]
+        [HasPermission(RoleID = "EDIT_USER")]
         public JsonResult ChangeStatus(long id)
         {
             var userStatus = new UserDao().ChangeStatus(id);

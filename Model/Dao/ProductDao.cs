@@ -31,6 +31,11 @@ namespace Model.Dao
             return db.Products.Find(id);
         }
 
+        public List<string> GetProductName(string name)
+        {
+            return db.Products.Where(x => x.Name.Contains(name)).Select(x => x.Name).ToList();
+        }
+
         public List<Product> GetRelatedProducts(long productId)
         {
             var product = db.Products.Find(productId);
@@ -60,6 +65,38 @@ namespace Model.Dao
                             Name = a.Name,
                             Price = a.Price
                         };
+            model = model.OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return model.ToList();
+        }
+
+        public List<ProductViewModel> Search(string keyword, ref int totalRecord, int pageIndex = 1, int pageSize = 2)
+        {
+            totalRecord = db.Products.Where(x => x.Name.Contains(keyword)).Count();
+            var model = (from a in db.Products
+                         join b in db.ProductCategories
+                         on a.CategoryID equals b.ID
+                         where a.Name.Contains(keyword)
+                         select new
+                         {
+                             Metatitle = a.MetaTitle,
+                             CateMetatitle = b.MetaTitle,
+                             CateName = b.Name,
+                             CreatedDate = a.CreateDate,
+                             ID = a.ID,
+                             Images = a.Image,
+                             Name = a.Name,
+                             Price = a.Price
+                         }).ToList().Select(x => new ProductViewModel()
+                         {
+                             Metatitle = x.Metatitle,
+                             CateMetatitle = x.CateMetatitle,
+                             CateName = x.Name,
+                             CreatedDate = x.CreatedDate,
+                             ID = x.ID,
+                             Images = x.Images,
+                             Name = x.Name,
+                             Price = x.Price
+                         });
             model = model.OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             return model.ToList();
         }

@@ -10,5 +10,6 @@ namespace ShopOnline.Common
     {
         public long UserID { get; set; }
         public string Username { get; set; }
+        public string GroupID { get; set; }
     }
 }

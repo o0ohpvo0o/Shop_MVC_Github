@@ -4,6 +4,7 @@ namespace Model.EF
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using Model.ViewModel;
 
     public partial class OnlineShopDbContext : DbContext
     {
@@ -29,6 +30,9 @@ namespace Model.EF
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<Credential> Credentials { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -173,5 +177,6 @@ namespace Model.EF
                 .IsUnicode(false);
         }
 
+        //public DbSet<ProductViewModel> ProductViewModels { get; set; }
     }
 }
