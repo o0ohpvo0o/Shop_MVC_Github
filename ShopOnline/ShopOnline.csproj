@@ -1708,6 +1708,7 @@
     <Content Include="Assets\admin\vendor\morrisjs\morris.min.js" />
     <Content Include="Assets\admin\vendor\raphael\raphael.js" />
     <Content Include="Assets\admin\vendor\raphael\raphael.min.js" />
+    <Content Include="Assets\client\css\all.css" />
     <Content Include="Assets\client\css\bootstrap-grid.css" />
     <Content Include="Assets\client\css\bootstrap-grid.min.css" />
     <Content Include="Assets\client\css\bootstrap-reboot.css" />
